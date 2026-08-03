@@ -1,0 +1,17 @@
+# kind-config.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: devops-capstone
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      # Maps localhost:30000 to Grafana
+      - containerPort: 30000
+        hostPort: 30000
+        protocol: TCP
+      # Maps localhost:30001 to React Frontend
+      - containerPort: 30001
+        hostPort: 30001
+        protocol: TCP
+  - role: worker
+  - role: worker

@@ -1,0 +1,18 @@
+{
+  "packages": [
+    "kubernetes-helm@4.2.3",
+    "kubectl@1.36.3",
+    "kind@0.32.0",
+    "docker@29.6.2",
+    "nodejs@24"
+  ],
+  "env": {},
+  "shell": {
+    "init_hook": [
+      "echo '✅ Devbox environment loaded!'"
+    ],
+    "scripts": {
+      "cluster": "kind create cluster --config kind-config.yaml"
+    }
+  }
+}

@@ -1,0 +1,175 @@
+### macOS ###
+# macOS hidden files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon files
+Icon
+
+# Thumbnails
+._*
+
+# Files that might be created on a CIFS shared volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.Trashes
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on a remote share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### Windows ###
+# Windows image databases
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Folder config files
+desktop.ini
+
+# Recycle Bin contents
+$RECYCLE.BIN/
+
+# Windows Shortcuts & Packages
+*.lnk
+*.cab
+*.msi
+*.msm
+*.msp
+
+### Linux ###
+# Linux specific temp / cache files
+*~
+
+# Temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# System volume information
+.directory
+
+# Services
+.Trash-*
+
+# NFS directory caches
+.nfs*
+
+### Visual Studio Code ###
+# VS Code editor settings
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/code-snippets
+
+# Local history
+.history/
+
+# Workspace files
+*.code-workspace
+
+### Local Development ###
+.devbox/
+.direnv/
+bin/
+local/
+tmp/
+temp/
+*.log
+debug/
+
+### Observability & Monitoring Tools ###
+# Prometheus
+prometheus.yml.local
+prometheus-*.yml
+
+# Grafana
+grafana/provisioning/dashboards/*.json
+!grafana/provisioning/dashboards/example.json
+
+# Observability tool configs (local overrides)
+observability-*.yaml
+*.prometheus.local
+
+### Secrets & Environment Variables ###
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.secret
+*.secrets
+*secret*.json
+*secret*.yaml
+*secret*.yml
+*credentials*.json
+*credentials*.yaml
+*credentials*.yml
+*token*.json
+!*example*
+!*sample*
+
+### Terraform ###
+# Local .terraform directories
+.terraform/
+**/.terraform/*
+.terraform.lock.hcl
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Exclude all .tfvars files, which might contain sensitive data
+*.tfvars
+*.tfvars.json
+!example.tfvars
+
+# Ignore override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do want to commit using negated pattern
+# !example_override.tf
+
+# Terraform plan files
+*.tfplan
+
+### Kubernetes, Helm & Docker ###
+# Kubernetes config & secrets
+kubeconfig
+kubeconfig.yaml
+kubeconfig-*
+secrets.yaml
+secrets-*.yaml
+.kube/
+
+# Helm Charts & dependencies
+*.tgz
+charts/*.tgz
+charts/
+values.local.yaml
+values-local.yaml
+values-*.local.yaml
+.helm/
+
+# Docker local overrides & image archives for K8s builds
+Dockerfile.local
+docker-compose.override.yml
+docker-compose.local.yml
+.docker/
+*.tar

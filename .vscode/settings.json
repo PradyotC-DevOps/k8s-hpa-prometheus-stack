@@ -1,0 +1,34 @@
+{
+  "terminal.integrated.profiles.osx": {
+    "devbox shell": {
+      "path": "/usr/local/bin/devbox",
+      "args": [
+        "shell"
+      ],
+      "icon": "terminal-bash"
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "devbox shell",
+  "terminal.integrated.profiles.linux": {
+    "devbox shell": {
+      "path": "devbox",
+      "args": [
+        "shell"
+      ],
+      "icon": "terminal-bash"
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "devbox shell",
+  "yaml.validate": true,
+  "yaml.completion": true,
+  "yaml.schemaStore.enable": true,
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.{yml,yaml}"
+  },
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.formatOnSave": true
+  }
+}

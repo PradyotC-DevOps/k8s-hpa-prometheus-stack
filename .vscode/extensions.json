@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "jetpack-io.devbox",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "redhat.vscode-yaml"
+  ]
+}
