@@ -13,7 +13,8 @@ A production-grade, containerized microservice architecture demonstrating advanc
 
 The project simulates a real-world traffic spike and automates the infrastructure's response. 
 
-```mermaid graph TD;
+```mermaid
+flowchart TD
     UI[React Frontend Load Generator] -->|Port 30001| Ingress[Nginx Proxy]
     Ingress -->|Spams API| Backend[Flask + Gunicorn Backend]
     Backend -->|Exposes /metrics| Exporter[Prometheus Exporter]
