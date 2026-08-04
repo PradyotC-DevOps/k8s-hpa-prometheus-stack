@@ -44,7 +44,7 @@ This project uses **[Devbox](https://www.jetify.com/devbox)** (powered by Nix) t
 
 * **Linux / macOS:**
 ```bash
-curl -fsSL [https://get.jetify.com/devbox](https://get.jetify.com/devbox) | bash
+curl -fsSL https://get.jetify.com/devbox | bash
 
 ```
 
@@ -98,7 +98,7 @@ docker push pradyotc/k8s-obs-backend:latest
 Install Prometheus, Grafana, and the Custom Metrics Adapter via Helm.
 
 ```bash
-helm repo add prometheus-community [https://prometheus-community.github.io/helm-charts](https://prometheus-community.github.io/helm-charts)
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
 # Install Prometheus Stack (Grafana exposed on port 30000)
@@ -111,7 +111,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack \
 # Install the Prometheus Adapter
 helm install prometheus-adapter prometheus-community/prometheus-adapter \
   -f k8s/3-adapter-values.yaml \
-  --set prometheus.url=[http://prometheus-kube-prometheus-prometheus.default.svc.cluster.local](http://prometheus-kube-prometheus-prometheus.default.svc.cluster.local) \
+  --set prometheus.url=http://prometheus-kube-prometheus-prometheus.default.svc.cluster.local \
   --set prometheus.port=9090
 
 ```
