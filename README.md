@@ -115,6 +115,12 @@ In your terminal, you will see the `TARGETS` breach the `15` threshold, and Kube
 Navigate to [http://localhost:30000](http://localhost:30000) (Login: `admin` / Password: run `kubectl get secret --namespace default prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo`).
 
 * Import the provided dashboard: `grafana/hpa-dashboard.json`.
+
+```bash
+kubectl create configmap hpa-dashboard --from-file=hpa-dashboard.json=grafana/hpa-dashboard.json
+kubectl label configmap hpa-dashboard grafana_dashboard=1
+```
+
 * You will see the visual correlation between the incoming HTTP traffic spike and the immediate provisioning of Kubernetes replica pods.
 
 ### Clean Up
