@@ -36,12 +36,42 @@ flowchart TD
 
 ---
 
+## 📋 Prerequisites & Environment Setup
+
+This project uses **[Devbox](https://www.jetify.com/devbox)** (powered by Nix) to guarantee reproducible environments. You do not need to manually install `kubectl`, `helm`, or `kind`—Devbox will handle it all for you.
+
+**1. Install Devbox (OS Specific):**
+
+* **Linux / macOS:**
+```bash
+curl -fsSL [https://get.jetify.com/devbox](https://get.jetify.com/devbox) | bash
+
+```
+
+
+* **Windows:**
+You must install and run this from within **WSL2** (Windows Subsystem for Linux). If you don't have WSL2, run `wsl --install` in PowerShell first, then open your WSL terminal and run the curl command above.
+
+**2. Activate the Environment:**
+Navigate to the root of this repository and start the shell:
+
+```bash
+devbox shell
+
+```
+
+> **Note:** If this is your first time using Devbox, it will automatically prompt you to approve the installation of the **Nix package manager**.
+> * On **Linux**, you will be prompted for `sudo` because Nix must create a system-level `/nix` directory.
+> * On **macOS**, you will be prompted for `sudo` because Nix must partition a virtual APFS volume to securely isolate the packages.
+> 
+> 
+
+**3. Ensure Docker is Running:**
+Make sure Docker Desktop or the Docker daemon is running on your machine before proceeding.
+
+---
+
 ## 🛠️ Quick Start (Local Setup)
-
-### Prerequisites
-
-* Docker & Docker Buildx
-* `kubectl`, `helm`, and `kind` (Easily managed via `devbox shell` or Nix)
 
 ### 1. Provision the Cluster
 
@@ -114,14 +144,15 @@ In your terminal, you will see the `TARGETS` breach the `15` threshold, and Kube
 **4. View the Grafana Dashboard:**
 Navigate to [http://localhost:30000](http://localhost:30000) (Login: `admin` / Password: run `kubectl get secret --namespace default prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo`).
 
-* Import the provided dashboard: `grafana/hpa-dashboard.json`.
+* Import the provided dashboard using the auto-provisioning configmap:
 
 ```bash
 kubectl create configmap hpa-dashboard --from-file=hpa-dashboard.json=grafana/hpa-dashboard.json
 kubectl label configmap hpa-dashboard grafana_dashboard=1
+
 ```
 
-* You will see the visual correlation between the incoming HTTP traffic spike and the immediate provisioning of Kubernetes replica pods.
+* Navigate to the General folder in Grafana. You will see the visual correlation between the incoming HTTP traffic spike and the immediate provisioning of Kubernetes replica pods.
 
 ### Clean Up
 
