@@ -1,188 +1,305 @@
 {
-    "annotations": {
-        "list": [
-            {
-                "builtIn": 1,
-                "datasource": {
-                    "type": "grafana",
-                    "uid": "-- Grafana --"
-                },
-                "enable": true,
-                "hide": true,
-                "iconColor": "rgba(0, 211, 255, 1)",
-                "name": "Annotations & Alerts",
-                "type": "dashboard"
-            }
-        ]
+    "apiVersion": "dashboard.grafana.app/v2",
+    "kind": "Dashboard",
+    "metadata": {
+        "name": "adck44f",
+        "namespace": "default",
+        "uid": "dac1225b-0bd3-444b-950f-b9bfcf3845a6",
+        "resourceVersion": "1785813691054996",
+        "generation": 1,
+        "creationTimestamp": "2026-08-04T03:21:31Z",
+        "labels": {
+            "grafana.app/deprecatedInternalID": "3816790176133120"
+        },
+        "annotations": {
+            "grafana.app/createdBy": "user:afu4lhxjzxw5cb",
+            "grafana.app/folder": "",
+            "grafana.app/saved-from-ui": "Grafana v13.1.1 (e784b7782a)"
+        }
     },
-    "editable": true,
-    "fiscalYearStartMonth": 0,
-    "graphTooltip": 0,
-    "id": null,
-    "links": [],
-    "liveNow": true,
-    "panels": [
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
+    "spec": {
+        "annotations": [
+            {
+                "kind": "AnnotationQuery",
+                "spec": {
+                    "query": {
+                        "kind": "DataQuery",
+                        "group": "grafana",
+                        "version": "v0",
+                        "datasource": {
+                            "name": "-- Grafana --"
+                        },
+                        "spec": {}
                     },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 10,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "smooth",
-                        "lineWidth": 2,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "never",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
+                    "enable": true,
+                    "hide": true,
+                    "iconColor": "rgba(0, 211, 255, 1)",
+                    "name": "Annotations & Alerts",
+                    "builtIn": true
+                }
+            }
+        ],
+        "cursorSync": "Off",
+        "description": "",
+        "editable": true,
+        "elements": {
+            "panel-1": {
+                "kind": "Panel",
+                "spec": {
+                    "id": 1,
+                    "title": "Requests per Second",
+                    "description": "",
+                    "links": [],
+                    "data": {
+                        "kind": "QueryGroup",
+                        "spec": {
+                            "queries": [
+                                {
+                                    "kind": "PanelQuery",
+                                    "spec": {
+                                        "query": {
+                                            "kind": "DataQuery",
+                                            "group": "prometheus",
+                                            "version": "v0",
+                                            "datasource": {
+                                                "name": "prometheus"
+                                            },
+                                            "spec": {
+                                                "editorMode": "code",
+                                                "expr": "sum(rate(flask_http_request_total[1m]))",
+                                                "legendFormat": "__auto",
+                                                "range": true
+                                            }
+                                        },
+                                        "refId": "Requests per Second",
+                                        "hidden": false
+                                    }
+                                }
+                            ],
+                            "transformations": [],
+                            "queryOptions": {}
                         }
                     },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
+                    "vizConfig": {
+                        "kind": "VizConfig",
+                        "group": "gauge",
+                        "version": "13.1.1",
+                        "spec": {
+                            "options": {
+                                "barShape": "flat",
+                                "barWidthFactor": 0.5,
+                                "effects": {
+                                    "barGlow": false,
+                                    "centerGlow": false,
+                                    "gradient": true
+                                },
+                                "endpointMarker": "point",
+                                "minVizHeight": 75,
+                                "minVizWidth": 75,
+                                "orientation": "auto",
+                                "reduceOptions": {
+                                    "calcs": [
+                                        "lastNotNull"
+                                    ],
+                                    "fields": "",
+                                    "values": false
+                                },
+                                "segmentCount": 1,
+                                "segmentSpacing": 0.3,
+                                "shape": "gauge",
+                                "showThresholdLabels": false,
+                                "showThresholdMarkers": true,
+                                "sizing": "auto",
+                                "sparkline": true,
+                                "textMode": "auto"
+                            },
+                            "fieldConfig": {
+                                "defaults": {
+                                    "thresholds": {
+                                        "mode": "absolute",
+                                        "steps": [
+                                            {
+                                                "value": 0,
+                                                "color": "green"
+                                            },
+                                            {
+                                                "value": 80,
+                                                "color": "red"
+                                            }
+                                        ]
+                                    },
+                                    "color": {
+                                        "mode": "thresholds"
+                                    }
+                                },
+                                "overrides": []
                             }
-                        ]
+                        }
                     }
-                },
-                "overrides": [
-                    {
-                        "matcher": {
-                            "id": "byName",
-                            "options": "Active Pods"
-                        },
-                        "properties": [
-                            {
-                                "id": "custom.drawStyle",
-                                "value": "bars"
-                            },
-                            {
-                                "id": "custom.fillOpacity",
-                                "value": 80
-                            },
-                            {
-                                "id": "custom.axisPlacement",
-                                "value": "right"
-                            },
-                            {
-                                "id": "color",
-                                "value": {
-                                    "fixedColor": "orange",
-                                    "mode": "fixed"
+                }
+            },
+            "panel-2": {
+                "kind": "Panel",
+                "spec": {
+                    "id": 2,
+                    "title": "Active Pods",
+                    "description": "",
+                    "links": [],
+                    "data": {
+                        "kind": "QueryGroup",
+                        "spec": {
+                            "queries": [
+                                {
+                                    "kind": "PanelQuery",
+                                    "spec": {
+                                        "query": {
+                                            "kind": "DataQuery",
+                                            "group": "prometheus",
+                                            "version": "v0",
+                                            "datasource": {
+                                                "name": "prometheus"
+                                            },
+                                            "spec": {
+                                                "editorMode": "code",
+                                                "expr": "kube_deployment_status_replicas{deployment=\"flask-backend\"}",
+                                                "legendFormat": "__auto",
+                                                "range": true
+                                            }
+                                        },
+                                        "refId": "Active Pods",
+                                        "hidden": false
+                                    }
                                 }
+                            ],
+                            "transformations": [],
+                            "queryOptions": {}
+                        }
+                    },
+                    "vizConfig": {
+                        "kind": "VizConfig",
+                        "group": "gauge",
+                        "version": "13.1.1",
+                        "spec": {
+                            "options": {
+                                "barShape": "flat",
+                                "barWidthFactor": 0.5,
+                                "effects": {
+                                    "barGlow": false,
+                                    "centerGlow": false,
+                                    "gradient": true
+                                },
+                                "endpointMarker": "point",
+                                "minVizHeight": 75,
+                                "minVizWidth": 75,
+                                "orientation": "auto",
+                                "reduceOptions": {
+                                    "calcs": [
+                                        "lastNotNull"
+                                    ],
+                                    "fields": "",
+                                    "values": false
+                                },
+                                "segmentCount": 1,
+                                "segmentSpacing": 0.3,
+                                "shape": "gauge",
+                                "showThresholdLabels": false,
+                                "showThresholdMarkers": true,
+                                "sizing": "auto",
+                                "sparkline": true,
+                                "textMode": "auto"
+                            },
+                            "fieldConfig": {
+                                "defaults": {
+                                    "thresholds": {
+                                        "mode": "absolute",
+                                        "steps": [
+                                            {
+                                                "value": 0,
+                                                "color": "green"
+                                            },
+                                            {
+                                                "value": 80,
+                                                "color": "red"
+                                            }
+                                        ]
+                                    },
+                                    "color": {
+                                        "mode": "thresholds"
+                                    }
+                                },
+                                "overrides": []
                             }
-                        ]
+                        }
+                    }
+                }
+            }
+        },
+        "layout": {
+            "kind": "GridLayout",
+            "spec": {
+                "items": [
+                    {
+                        "kind": "GridLayoutItem",
+                        "spec": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 12,
+                            "height": 8,
+                            "element": {
+                                "kind": "ElementReference",
+                                "name": "panel-1"
+                            }
+                        }
                     },
                     {
-                        "matcher": {
-                            "id": "byName",
-                            "options": "Requests per Second"
-                        },
-                        "properties": [
-                            {
-                                "id": "color",
-                                "value": {
-                                    "fixedColor": "blue",
-                                    "mode": "fixed"
-                                }
+                        "kind": "GridLayoutItem",
+                        "spec": {
+                            "x": 12,
+                            "y": 0,
+                            "width": 12,
+                            "height": 8,
+                            "element": {
+                                "kind": "ElementReference",
+                                "name": "panel-2"
                             }
-                        ]
+                        }
                     }
                 ]
-            },
-            "gridPos": {
-                "h": 16,
-                "w": 24,
-                "x": 0,
-                "y": 0
-            },
-            "id": 1,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "sum(rate(flask_http_request_duration_seconds_count[1m]))",
-                    "legendFormat": "Requests per Second",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "kube_deployment_status_replicas{deployment=\"flask-backend\"}",
-                    "legendFormat": "Active Pods",
-                    "range": true,
-                    "refId": "B"
-                }
+            }
+        },
+        "links": [],
+        "liveNow": false,
+        "preload": false,
+        "tags": [],
+        "timeSettings": {
+            "timezone": "browser",
+            "from": "now-5m",
+            "to": "now",
+            "autoRefresh": "5s",
+            "autoRefreshIntervals": [
+                "5s",
+                "10s",
+                "30s",
+                "1m",
+                "5m",
+                "15m",
+                "30m",
+                "1h",
+                "2h",
+                "1d"
             ],
-            "title": "HPA Autoscaling: Traffic vs. Pods",
-            "type": "timeseries"
+            "hideTimepicker": false,
+            "fiscalYearStartMonth": 0
+        },
+        "title": "K8s autoscale dashboard",
+        "variables": [],
+        "preferences": {
+            "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                    "items": []
+                }
+            }
         }
-    ],
-    "refresh": "5s",
-    "schemaVersion": 38,
-    "style": "dark",
-    "tags": [
-        "kubernetes",
-        "hpa"
-    ],
-    "templating": {
-        "list": []
-    },
-    "time": {
-        "from": "now-15m",
-        "to": "now"
-    },
-    "timepicker": {},
-    "timezone": "",
-    "title": "K8s Autoscaling Engine",
-    "uid": "hpa-capstone-dash",
-    "version": 1,
-    "weekStart": ""
+    }
 }
