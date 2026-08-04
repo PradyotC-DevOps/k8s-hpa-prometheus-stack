@@ -142,7 +142,12 @@ Navigate to [http://localhost:30001](http://localhost:30001). Click the **🚀 S
 In your terminal, you will see the `TARGETS` breach the `15` threshold, and Kubernetes will instantly scale the `REPLICAS` from 1 to 5.
 
 **4. View the Grafana Dashboard:**
-Navigate to [http://localhost:30000](http://localhost:30000) (Login: `admin` / Password: run `kubectl get secret --namespace default prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo`).
+Navigate to [http://localhost:30000](http://localhost:30000) (Login: `admin` / Password: run `below command`).
+
+```bash
+kubectl get secret --namespace default prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+
+```
 
 * Import the provided dashboard using the auto-provisioning configmap:
 
@@ -188,10 +193,29 @@ Whether this stack is deployed on a macOS laptop running a virtualized Docker `k
 Below is a condensed output log demonstrating the seamless deployment and automated scaling sequence executed entirely within a remote Linux web sandbox. Because cloud sandboxes often enforce strict network latency and CPU throttling, the HPA threshold in this demonstration was dynamically patched to `5` requests per second to simulate a high-load event within a constrained environment.
 
 ```bash
-root@controlplane:~$ curl -fsSL https://get.jetify.com/devbox | bash
+kubectl patch hpa flask-api-hpa --type='json' -p='[{"op": "replace", "path": "/spec/metrics/0/pods/target/averageValue", "value": "5"}]'
+
+```
+
+### Execution Logs
+
+```bash
+root@controlplane:~$ kubeadm version
+kubeadm version: &version.Info{Major:"1", Minor:"35", EmulationMajor:"", EmulationMinor:"", MinCompatibilityMajor:"", MinCompatibilityMinor:"", GitVersion:"v1.35.1", GitCommit:"8fea90b45245ef5c8ba54e7ae044d3e777c22500", GitTreeState:"clean", BuildDate:"2026-02-10T12:55:17Z", GoVersion:"go1.25.6", Compiler:"gc", Platform:"linux/amd64"}
+
+root@controlplane:~$ kubectl get nodes
+NAME           STATUS   ROLES           AGE   VERSION
+controlplane   Ready    control-plane   14d   v1.35.1
+node01         Ready    <none>          14d   v1.35.1
+
+root@controlplane:~$ git clone -q https://github.com/PradyotC-DevOps/k8s-hpa-prometheus-stack.git
+
+root@controlplane:~$ cd k8s-hpa-prometheus-stack
+
+root@controlplane:~/k8s-hpa-prometheus-stack$ curl -fsSL https://get.jetify.com/devbox | bash
 ✓ Successfully installed devbox 🚀
 
-root@controlplane:~$ devbox shell
+root@controlplane:~/k8s-hpa-prometheus-stack$ devbox shell
 Nix is not installed. Devbox will attempt to install it.
 INFO Step: Provision Nix
 INFO Step: Configure Nix
@@ -199,15 +223,21 @@ Nix installed successfully. Devbox is ready to use!
 Info: Installing the following packages to the nix store: docker@29.6.2, nodejs@24, kubernetes-helm@4.2.3, kubectl@1.36.3, kind@0.32.0
 ✅ Devbox environment loaded!
 
-(devbox) root@controlplane:~$ helm install prometheus prometheus-community/kube-prometheus-stack -f k8s/values.yaml
+(devbox) root@controlplane:~/k8s-hpa-prometheus-stack$ helm install prometheus prometheus-community/kube-prometheus-stack \
+  --set prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues=false \
+  --set prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues=false \
+  --set grafana.service.type=NodePort \
+  --set grafana.service.nodePort=30000
 NAME: prometheus
 STATUS: deployed
 
-(devbox) root@controlplane:~$ helm install prometheus-adapter prometheus-community/prometheus-adapter -f k8s/3-adapter-values.yaml
+(devbox) root@controlplane:~/k8s-hpa-prometheus-stack$ helm install prometheus-adapter prometheus-community/prometheus-adapter -f k8s/3-adapter-values.yaml \
+  --set prometheus.url=http://prometheus-kube-prometheus-prometheus.default.svc.cluster.local \
+  --set prometheus.port=9090
 NAME: prometheus-adapter
 STATUS: deployed
 
-(devbox) root@controlplane:~$ kubectl apply -f k8s/1-apps.yaml && kubectl apply -f k8s/2-monitoring.yaml
+(devbox) root@controlplane:~/k8s-hpa-prometheus-stack$ kubectl apply -f k8s/1-apps.yaml && kubectl apply -f k8s/2-monitoring.yaml
 deployment.apps/flask-backend created
 service/flask-backend created
 deployment.apps/react-frontend created
@@ -215,7 +245,15 @@ service/react-frontend created
 servicemonitor.monitoring.coreos.com/flask-monitor created
 horizontalpodautoscaler.autoscaling/flask-api-hpa created
 
-(devbox) root@controlplane:~$ kubectl get hpa -w
+(devbox) root@controlplane:~/k8s-hpa-prometheus-stack$ kubectl get secret --namespace default prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+KmyKgjDGqVLqY7vfCkbITLpWXxXMqvItyxC75lrq
+
+(devbox) root@controlplane:~/k8s-hpa-prometheus-stack$ kubectl create configmap hpa-dashboard --from-file=hpa-dashboard.json=grafana/hpa-dashboard.json
+kubectl label configmap hpa-dashboard grafana_dashboard=1
+configmap/hpa-dashboard created
+configmap/hpa-dashboard labeled
+
+(devbox) root@controlplane:~/k8s-hpa-prometheus-stack$ kubectl get hpa -w
 NAME            REFERENCE                  TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
 flask-api-hpa   Deployment/flask-backend   <unknown>/5    1         5         1          89s
 flask-api-hpa   Deployment/flask-backend   0/5            1         5         1          2m00s
